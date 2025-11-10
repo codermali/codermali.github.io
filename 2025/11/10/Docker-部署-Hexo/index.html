@@ -81,21 +81,19 @@
 
 <meta name="description" content="镜像选择选择使用 Docker 部署，是为了能方便、快速的部署，这样可以聚焦到 Hexo 本身。 Hexo 官方是没有提供 Docker Image 的，因此需要自行寻找。 在寻找 Hexo 镜像的过程，花了一些时间，走了一段弯路。这里只介绍一下我试用过的镜像，以及碰到的问题。  bloodstar&#x2F;hexo 。在修改配置文件 _config.yml 或者发布文章等变更操作后，必须要重启容器，才能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dcoker 部署 Hexo">
-<meta property="og:url" content="https://blog.codermali.com/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/index.html">
+<meta property="og:title" content="Docker 部署 Hexo">
+<meta property="og:url" content="https://blog.codermali.com/2025/11/10/Docker-%E9%83%A8%E7%BD%B2-Hexo/index.html">
 <meta property="og:site_name" content="mali&#39;s code lib">
 <meta property="og:description" content="镜像选择选择使用 Docker 部署，是为了能方便、快速的部署，这样可以聚焦到 Hexo 本身。 Hexo 官方是没有提供 Docker Image 的，因此需要自行寻找。 在寻找 Hexo 镜像的过程，花了一些时间，走了一段弯路。这里只介绍一下我试用过的镜像，以及碰到的问题。  bloodstar&#x2F;hexo 。在修改配置文件 _config.yml 或者发布文章等变更操作后，必须要重启容器，才能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.codermali.com/.com//image1.png">
-<meta property="og:image" content="https://blog.codermali.com/.com//image1.png">
-<meta property="og:image" content="https://blog.codermali.com/.com//image1.png">
-<meta property="og:image" content="https://blog.codermali.com/.com//image2.png">
-<meta property="og:image" content="https://blog.codermali.com/.com//image3.png">
-<meta property="article:published_time" content="2025-11-09T08:24:54.000Z">
-<meta property="article:modified_time" content="2025-11-10T12:17:18.347Z">
+<meta property="og:image" content="https://blog.codermali.com/Docker-%E9%83%A8%E7%BD%B2-Hexo/image1.png">
+<meta property="og:image" content="https://blog.codermali.com/Docker-%E9%83%A8%E7%BD%B2-Hexo/image2.png">
+<meta property="og:image" content="https://blog.codermali.com/Docker-%E9%83%A8%E7%BD%B2-Hexo/image3.png">
+<meta property="article:published_time" content="2025-11-10T12:44:27.000Z">
+<meta property="article:modified_time" content="2025-11-10T12:53:07.850Z">
 <meta property="article:author" content="马力">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.codermali.com/.com//image1.png">
+<meta name="twitter:image" content="https://blog.codermali.com/Docker-%E9%83%A8%E7%BD%B2-Hexo/image1.png">
 
 
 
@@ -125,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://blog.codermali.com/2025/11/09/Dcoker-部署-Hexo/"/>
+  <link rel="canonical" href="https://blog.codermali.com/2025/11/10/Docker-部署-Hexo/"/>
 
 
 
 
 
-  <title>Dcoker 部署 Hexo | mali's code lib</title>
+  <title>Docker 部署 Hexo | mali's code lib</title>
   
 
 
@@ -238,7 +236,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.codermali.com/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/">
+    <link itemprop="mainEntityOfPage" href="https://blog.codermali.com/2025/11/10/Docker-%E9%83%A8%E7%BD%B2-Hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -255,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Dcoker 部署 Hexo</h1>
+          <h1 class="post-title" itemprop="name headline">Docker 部署 Hexo</h1>
         
 
         <div class="post-meta">
@@ -267,8 +265,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-11-09T16:24:54+08:00">
-                2025-11-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-11-10T20:44:27+08:00">
+                2025-11-10
               </time>
             
 
@@ -369,11 +367,11 @@
 <h3 id="4、创建名为-username-github-io-的仓库。"><a href="#4、创建名为-username-github-io-的仓库。" class="headerlink" title="4、创建名为 ***username*.github.io** 的仓库。"></a>4、创建名为 <a target="_blank" rel="noopener" href="http://username.github.io/">**<code>*username*.github.io</code></a>** 的仓库。</h3><p>注意： <code>username</code> 必须是 <code>Github</code> 的账户名。</p>
 <h3 id="5、部署"><a href="#5、部署" class="headerlink" title="5、部署"></a>5、部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/home/hexo/.hexo <span class="comment"># hexo deploy</span></span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Setting up Git deployment...</span><br><span class="line">hint: Using <span class="string">&#x27;master&#x27;</span> as the name <span class="keyword">for</span> the initial branch. This default branch name</span><br><span class="line">hint: is subject to change. To configure the initial branch name to use <span class="keyword">in</span> all</span><br><span class="line">hint: of your new repositories, <span class="built_in">which</span> will suppress this warning, call:</span><br><span class="line">hint:</span><br><span class="line">hint: 	git config --global init.defaultBranch &lt;name&gt;</span><br><span class="line">hint:</span><br><span class="line">hint: Names commonly chosen instead of <span class="string">&#x27;master&#x27;</span> are <span class="string">&#x27;main&#x27;</span>, <span class="string">&#x27;trunk&#x27;</span> and</span><br><span class="line">hint: <span class="string">&#x27;development&#x27;</span>. The just-created branch can be renamed via this <span class="built_in">command</span>:</span><br><span class="line">hint:</span><br><span class="line">hint: 	git branch -m &lt;name&gt;</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/hexo/.hexo/.deploy_git/.git/</span><br><span class="line">[master (root-commit) 15c75c3] First commit</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 placeholder</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">INFO  Copying files from public folder...</span><br><span class="line">INFO  Copying files from extend <span class="built_in">dirs</span>...</span><br><span class="line">[master 7457eb2] Site updated: 2025-11-05 23:51:38</span><br><span class="line"> 12 files changed, 2475 insertions(+)</span><br><span class="line"> create mode 100644 2025/11/05/hello-world/index.html</span><br><span class="line"> create mode 100644 archives/2025/11/index.html</span><br><span class="line"> create mode 100644 archives/2025/index.html</span><br><span class="line"> create mode 100644 archives/index.html</span><br><span class="line"> create mode 100644 css/images/banner.jpg</span><br><span class="line"> create mode 100644 css/style.css</span><br><span class="line"> create mode 100644 fancybox/jquery.fancybox.min.css</span><br><span class="line"> create mode 100644 fancybox/jquery.fancybox.min.js</span><br><span class="line"> create mode 100644 index.html</span><br><span class="line"> create mode 100644 js/jquery-3.6.4.min.js</span><br><span class="line"> create mode 100644 js/script.js</span><br><span class="line"> delete mode 100644 placeholder</span><br><span class="line">Enumerating objects: 27, <span class="keyword">done</span>.</span><br><span class="line">Counting objects: 100% (27/27), <span class="keyword">done</span>.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (19/19), <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (27/27), 278.90 KiB | 865.00 KiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 27 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)</span><br><span class="line">remote: Resolving deltas: 100% (3/3), <span class="keyword">done</span>.</span><br><span class="line">To github.com:codermali/codermali.github.io.git</span><br><span class="line"> + 00011e1...7457eb2 HEAD -&gt; main (forced update)</span><br><span class="line">branch <span class="string">&#x27;master&#x27;</span> <span class="built_in">set</span> up to track <span class="string">&#x27;git@github.com:codermali/codermali.github.io.git/main&#x27;</span>.</span><br><span class="line">INFO  Deploy <span class="keyword">done</span>: git</span><br><span class="line">/home/hexo/.hexo <span class="comment">#</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="6、部署成功"><a href="#6、部署成功" class="headerlink" title="6、部署成功"></a>6、部署成功</h3><p><img src="/.com//image1.png" alt="image1"><br><img src="/.com//image1.png" alt="image1"><br><img src="/.com//image1.png" alt="image1"></p>
+<h3 id="6、部署成功"><a href="#6、部署成功" class="headerlink" title="6、部署成功"></a>6、部署成功</h3><p><img src="/./Docker-%E9%83%A8%E7%BD%B2-Hexo/image1.png" alt="image1"></p>
 <h3 id="7、解析自定义域名到-Github-Pages"><a href="#7、解析自定义域名到-Github-Pages" class="headerlink" title="7、解析自定义域名到 Github Pages"></a>7、解析自定义域名到 Github Pages</h3><p>1、添加域名</p>
-<p><img src="/.com//image2.png" alt="image2"></p>
+<p><img src="/./Docker-%E9%83%A8%E7%BD%B2-Hexo/image2.png" alt="image2"></p>
 <p>2、域名解析 CNAME 到 <a target="_blank" rel="noopener" href="https://codermali.github.io/">https://codermali.github.io/</a></p>
-<p><img src="/.com//image3.png" alt="image3"></p>
+<p><img src="/./Docker-%E9%83%A8%E7%BD%B2-Hexo/image3.png" alt="image3"></p>
 <p>3、完成</p>
 
       

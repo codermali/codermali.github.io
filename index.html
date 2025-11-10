@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>mali&#39;s code lib</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="mali&#39;s code lib">
+<meta property="og:url" content="https://blog.codermali.com/index.html">
+<meta property="og:site_name" content="mali&#39;s code lib">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="马力">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="mali's code lib" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">mali&#39;s code lib</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">心之所向，无问西东</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.codermali.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Dcoker-部署-Hexo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/" class="article-date">
+  <time class="dt-published" datetime="2025-11-09T08:24:54.000Z" itemprop="datePublished">2025-11-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hexo-%E7%B3%BB%E5%88%97/">Hexo 系列</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/">Dcoker 部署 Hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="镜像选择"><a href="#镜像选择" class="headerlink" title="镜像选择"></a>镜像选择</h1><p>选择使用 <code>Docker</code> 部署，是为了能方便、快速的部署，这样可以聚焦到 <code>Hexo</code> 本身。</p>
+<p><code>Hexo</code> 官方是没有提供 <code>Docker</code> <code>Image</code> 的，因此需要自行寻找。</p>
+<p>在寻找 <code>Hexo</code> 镜像的过程，花了一些时间，走了一段弯路。这里只介绍一下我试用过的镜像，以及碰到的问题。</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/appotry/docker-hexo"><code>bloodstar/hexo</code></a> 。在修改配置文件 <code>_config.yml</code> 或者发布文章等变更操作后，必须要重启容器，才能生效。在 <code>github</code> 上提起 <code>issue</code> 沟通后，得知无法解决这个问题。</p>
+<blockquote>
+<p>个人也发现了，可能和node的特性有关，restart pm2这个内部的web服务器也可以立即生效，个人的解决方法是如下重启web服务 <code>pm2 restart /hexo_run.js</code>。</p>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/taskbjorn/hexo"><code>taskbjorn/hexo</code></a> 。这个镜像会有权限问题。简单来说就是因为，当宿主机上不存在挂载目录时，Docker 会自动创建它，但这个创建操作是由 Docker daemon 执行的，而 Docker daemon 通常以 root 权限运行，所以自动创建的目录归属于 root。这个创建过程发生在容器启动之前，与你在 docker-compose.yml 中设置的 user: 1000:0 无关。</p>
+</li>
+</ol>
+<p>到最后，我自己编写了一个 <code>Dockerfile</code> ，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"># ============================================</span><br><span class="line"># Hexo 博客容器镜像</span><br><span class="line"># 基于 Alpine Linux 构建的轻量级 Hexo 环境</span><br><span class="line"># ============================================</span><br><span class="line"></span><br><span class="line"># 使用 Alpine Linux 作为基础镜像（体积小，安全性高）</span><br><span class="line">FROM alpine:latest</span><br><span class="line"></span><br><span class="line"># 设置构建时的代理环境变量（用于加速包下载）</span><br><span class="line">ENV http_prosy=http://192.168.88.2:7890</span><br><span class="line">ENV https_proxy=http://192.168.88.2:7890</span><br><span class="line"></span><br><span class="line"># 安装运行 Hexo 所需的依赖包</span><br><span class="line"># - git: 用于版本控制和主题/插件安装</span><br><span class="line"># - nodejs/npm: Hexo 运行环境</span><br><span class="line"># - openssh: SSH 连接支持</span><br><span class="line"># - su-exec: 轻量级用户切换工具（比 su 和 sudo 更适合容器）</span><br><span class="line">RUN apk add --update --no-cache git nodejs npm openssh su-exec &amp;&amp; \</span><br><span class="line">    # 全局安装 hexo-cli 命令行工具</span><br><span class="line">    npm install -g --loglevel=error hexo-cli &amp;&amp; \</span><br><span class="line">    # 清理 NPM 缓存和 APK 缓存以减小镜像体积</span><br><span class="line">    npm cache clean --force &amp;&amp; \</span><br><span class="line">    rm -rf /var/cache/apk/*</span><br><span class="line"></span><br><span class="line"># 创建非特权用户 hexo (UID:1000, GID:1000)</span><br><span class="line"># 使用非 root 用户运行应用是容器安全最佳实践</span><br><span class="line">RUN addgroup -S hexo -g 1000 &amp;&amp; \</span><br><span class="line">    adduser -S hexo -g &#x27;hexo&#x27; -u 1000 -G hexo &amp;&amp; \</span><br><span class="line">    # 创建 Hexo 博客目录结构</span><br><span class="line">    mkdir -p /hexo/malideBlog &amp;&amp; \</span><br><span class="line">    # 设置目录所有权（注意：volume 挂载会覆盖此权限）</span><br><span class="line">    chown -R hexo:hexo /hexo</span><br><span class="line"></span><br><span class="line"># 设置容器工作目录为博客根目录</span><br><span class="line">WORKDIR /hexo/malideBlog</span><br><span class="line"></span><br><span class="line"># 声明容器对外暴露的端口（Hexo 默认服务端口）</span><br><span class="line">EXPOSE 4000</span><br><span class="line"></span><br><span class="line"># 容器启动入口点</span><br><span class="line"># 1. 以 root 身份启动，修复 volume 挂载目录的权限问题</span><br><span class="line">#    （Docker 自动创建的挂载目录默认属于 root）</span><br><span class="line"># 2. 使用 su-exec 切换到 hexo 用户并启动 shell</span><br><span class="line">#    （exec 确保 shell 成为 PID 1，正确处理信号）</span><br><span class="line">ENTRYPOINT [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;chown -R hexo:hexo /hexo/malideBlog &amp;&amp; exec su-exec hexo:hexo /bin/sh&quot;]</span><br></pre></td></tr></table></figure>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>这个镜像只提供一个环境，并解决了权限问题，使用起来也很简单。我习惯使用 <code>Docker-Compose</code> 来部署，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># ============================================</span><br><span class="line"># Hexo 博客服务 Docker Compose 配置</span><br><span class="line"># ============================================</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  hexo:</span><br><span class="line">    # 容器名称</span><br><span class="line">    container_name: hexo</span><br><span class="line">    </span><br><span class="line">    # 使用的镜像</span><br><span class="line">    image: mali/hexo:1.0</span><br><span class="line">    </span><br><span class="line">    # 容器重启策略：除非手动停止，否则总是重启</span><br><span class="line">    restart: unless-stopped</span><br><span class="line">    </span><br><span class="line">    # 环境变量配置</span><br><span class="line">    environment:</span><br><span class="line">      # 设置时区为上海（东八区）</span><br><span class="line">      - TZ=Asia/Shanghai</span><br><span class="line">      # 代理配置（通过 clash 容器代理网络请求）</span><br><span class="line">      - http_proxy=http://clash:7890</span><br><span class="line">      - https_proxy=http://clash:7890</span><br><span class="line">      # 不代理本地回环地址</span><br><span class="line">      - no_proxy=localhost,127.0.0.1,::1</span><br><span class="line">    </span><br><span class="line">    # 数据卷挂载</span><br><span class="line">    # 将宿主机 ./blog 目录挂载到容器内的 Hexo 博客目录</span><br><span class="line">    # 注意：挂载会覆盖容器内原有目录，权限由 ENTRYPOINT 自动修复</span><br><span class="line">    volumes:</span><br><span class="line">      - ./blog:/hexo/malideBlog</span><br><span class="line">    </span><br><span class="line">    # 端口映射：宿主机 4000 端口映射到容器 4000 端口</span><br><span class="line">    ports:</span><br><span class="line">      - 4000:4000</span><br><span class="line">    </span><br><span class="line">    # 连接到外部网络（与其他服务如 clash 通信）</span><br><span class="line">    networks:</span><br><span class="line">      - services_network</span><br><span class="line">    </span><br><span class="line">    # 保持标准输入打开，允许交互式操作</span><br><span class="line">    stdin_open: true</span><br><span class="line">    </span><br><span class="line">    # 分配伪终端，支持终端交互</span><br><span class="line">    tty: true</span><br><span class="line"></span><br><span class="line"># 网络配置</span><br><span class="line">networks:</span><br><span class="line">  # 使用外部已存在的网络（需要提前创建）</span><br><span class="line">  services_network:</span><br><span class="line">    external: true</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>第一步就是初始化 <code>hexo init</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">## 进入容器</span><br><span class="line">[/share/Container/services/hexo] # docker exec -it hexo sh</span><br><span class="line">/hexo/malideBlog #</span><br><span class="line"></span><br><span class="line">## 在目前的文件夹建立网站</span><br><span class="line">/hexo/malideBlog # hexo init</span><br><span class="line">INFO  Cloning hexo-starter https://github.com/hexojs/hexo-starter.git</span><br><span class="line">INFO  Install dependencies</span><br><span class="line">INFO  Start blogging with Hexo!</span><br><span class="line">/hexo/malideBlog # </span><br><span class="line"></span><br><span class="line">## 生成静态文件，并启动服务器。</span><br><span class="line">/hexo/malideBlog # hexo g &amp;&amp; hexo d</span><br><span class="line">/hexo/malideBlog # </span><br></pre></td></tr></table></figure>
+
+<h1 id="部署到-Github-Pages"><a href="#部署到-Github-Pages" class="headerlink" title="部署到 Github Pages"></a>部署到 <code>Github Pages</code></h1><h3 id="配置免密环境"><a href="#配置免密环境" class="headerlink" title="配置免密环境"></a>配置免密环境</h3><p>1、配置本地 <code>git</code> 环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## 邮箱必须和Github的注册邮箱一致</span><br><span class="line">/home/hexo/.hexo # git config --global user.email &quot;mali@codermali.com&quot;</span><br><span class="line">## 用户名必须和Github的用户名一致</span><br><span class="line">/home/hexo/.hexo # git config --global user.name &quot;codermali&quot;</span><br><span class="line">/home/hexo/.hexo # </span><br><span class="line"></span><br><span class="line">## 验证</span><br><span class="line">/home/hexo/.hexo # git config --list</span><br><span class="line">user.email=mali@codermali.comm</span><br><span class="line">user.name=codermali</span><br></pre></td></tr></table></figure>
+
+<p>2、配置本地公钥对</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/home/hexo/.hexo # ssh-keygen -t rsa -C mali@codermali.com</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):</span><br><span class="line">Created directory &#x27;/root/.ssh&#x27;.</span><br><span class="line">Enter passphrase for &quot;/root/.ssh/id_rsa&quot; (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:1ZYDWuIiNKYS/s57b4W6ALUQG8N68oJVQpuHwNI2bw0 mali@codermali.com</span><br><span class="line">The key&#x27;s randomart image is:</span><br><span class="line">+---[RSA 3072]----+</span><br><span class="line">|=*. +   . o      |</span><br><span class="line">|o=XBE. . + o .   |</span><br><span class="line">|+==*oo. o . =    |</span><br><span class="line">|o.*.+... . . .   |</span><br><span class="line">|.* +    S        |</span><br><span class="line">|o =    . .       |</span><br><span class="line">| . +  . .        |</span><br><span class="line">|    oo .         |</span><br><span class="line">|   ...+.         |</span><br><span class="line">+----[SHA256]-----+</span><br><span class="line">/home/hexo/.hexo #</span><br><span class="line"></span><br><span class="line">## 将公钥（id_rsa.pub）内容添加到Github</span><br><span class="line">路径是 github -&gt; Setting -&gt; SSH and GPG keys -&gt; New SSH Key 。</span><br><span class="line"></span><br><span class="line">## 验证连接成功</span><br><span class="line">/home/hexo/.hexo # ssh git@github.com</span><br><span class="line">The authenticity of host &#x27;github.com (20.205.243.166)&#x27; can&#x27;t be established.</span><br><span class="line">ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.</span><br><span class="line">This key is not known by any other names.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="line">Warning: Permanently added &#x27;github.com&#x27; (ED25519) to the list of known hosts.</span><br><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi codermali! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">Connection to github.com closed.</span><br><span class="line">/home/hexo/.hexo #</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、配置一键部署"><a href="#3、配置一键部署" class="headerlink" title="3、配置一键部署"></a>3、配置一键部署</h3><p><code>Hexo</code> 提供了快速、简便的部署策略。 您只需一条命令即可将网站部署到服务器上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>该命令需要插件 <code>hexo-deployer-git</code> 支持，</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## 安装 hexo-deployer-git</span><br><span class="line">/home/hexo/.<span class="property">hexo</span> # npm install hexo-deployer-git --save</span><br><span class="line"></span><br><span class="line">added <span class="number">18</span> packages, and audited <span class="number">258</span> packages <span class="keyword">in</span> 12s</span><br><span class="line"></span><br><span class="line"><span class="number">43</span> packages are looking <span class="keyword">for</span> funding</span><br><span class="line">  run <span class="string">`npm fund`</span> <span class="keyword">for</span> details</span><br><span class="line"></span><br><span class="line">found <span class="number">0</span> vulnerabilities</span><br><span class="line">/home/hexo/.<span class="property">hexo</span> #</span><br></pre></td></tr></table></figure>
+
+<p>同时，还需要修改配置文件 <code>_config.yml</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:codermali/codermali.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+<p>在这里有一个注意点， <code>repo</code> 的链接必须是 <code>git</code> 的链接，如果是 <code>http</code> 的链接，那么就需要配置 <code>token</code> ，否则在 <code>hexo deploy</code> 时会提示输入账号和密码。</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jimmy_wei_2010/article/details/130268408">hexo 部署填写 github 用户名和密码一次性解决方案_hexo账号忘记密码-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://damye.github.io/2016/03/10/Hexo-GitHub-Deploy%E9%9C%80%E8%A6%81%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D/">Hexo GitHub Deploy需要输入用户名</a></p>
+<h3 id="4、创建名为-username-github-io-的仓库。"><a href="#4、创建名为-username-github-io-的仓库。" class="headerlink" title="4、创建名为 ***username*.github.io** 的仓库。"></a>4、创建名为 <a target="_blank" rel="noopener" href="http://username.github.io/">**<code>*username*.github.io</code></a>** 的仓库。</h3><p>注意： <code>username</code> 必须是 <code>Github</code> 的账户名。</p>
+<h3 id="5、部署"><a href="#5、部署" class="headerlink" title="5、部署"></a>5、部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/home/hexo/.hexo <span class="comment"># hexo deploy</span></span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Setting up Git deployment...</span><br><span class="line">hint: Using <span class="string">&#x27;master&#x27;</span> as the name <span class="keyword">for</span> the initial branch. This default branch name</span><br><span class="line">hint: is subject to change. To configure the initial branch name to use <span class="keyword">in</span> all</span><br><span class="line">hint: of your new repositories, <span class="built_in">which</span> will suppress this warning, call:</span><br><span class="line">hint:</span><br><span class="line">hint: 	git config --global init.defaultBranch &lt;name&gt;</span><br><span class="line">hint:</span><br><span class="line">hint: Names commonly chosen instead of <span class="string">&#x27;master&#x27;</span> are <span class="string">&#x27;main&#x27;</span>, <span class="string">&#x27;trunk&#x27;</span> and</span><br><span class="line">hint: <span class="string">&#x27;development&#x27;</span>. The just-created branch can be renamed via this <span class="built_in">command</span>:</span><br><span class="line">hint:</span><br><span class="line">hint: 	git branch -m &lt;name&gt;</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/hexo/.hexo/.deploy_git/.git/</span><br><span class="line">[master (root-commit) 15c75c3] First commit</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 placeholder</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">INFO  Copying files from public folder...</span><br><span class="line">INFO  Copying files from extend <span class="built_in">dirs</span>...</span><br><span class="line">[master 7457eb2] Site updated: 2025-11-05 23:51:38</span><br><span class="line"> 12 files changed, 2475 insertions(+)</span><br><span class="line"> create mode 100644 2025/11/05/hello-world/index.html</span><br><span class="line"> create mode 100644 archives/2025/11/index.html</span><br><span class="line"> create mode 100644 archives/2025/index.html</span><br><span class="line"> create mode 100644 archives/index.html</span><br><span class="line"> create mode 100644 css/images/banner.jpg</span><br><span class="line"> create mode 100644 css/style.css</span><br><span class="line"> create mode 100644 fancybox/jquery.fancybox.min.css</span><br><span class="line"> create mode 100644 fancybox/jquery.fancybox.min.js</span><br><span class="line"> create mode 100644 index.html</span><br><span class="line"> create mode 100644 js/jquery-3.6.4.min.js</span><br><span class="line"> create mode 100644 js/script.js</span><br><span class="line"> delete mode 100644 placeholder</span><br><span class="line">Enumerating objects: 27, <span class="keyword">done</span>.</span><br><span class="line">Counting objects: 100% (27/27), <span class="keyword">done</span>.</span><br><span class="line">Delta compression using up to 4 threads</span><br><span class="line">Compressing objects: 100% (19/19), <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (27/27), 278.90 KiB | 865.00 KiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 27 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)</span><br><span class="line">remote: Resolving deltas: 100% (3/3), <span class="keyword">done</span>.</span><br><span class="line">To github.com:codermali/codermali.github.io.git</span><br><span class="line"> + 00011e1...7457eb2 HEAD -&gt; main (forced update)</span><br><span class="line">branch <span class="string">&#x27;master&#x27;</span> <span class="built_in">set</span> up to track <span class="string">&#x27;git@github.com:codermali/codermali.github.io.git/main&#x27;</span>.</span><br><span class="line">INFO  Deploy <span class="keyword">done</span>: git</span><br><span class="line">/home/hexo/.hexo <span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6、部署成功"><a href="#6、部署成功" class="headerlink" title="6、部署成功"></a>6、部署成功</h3><p><img src="/./Dcoker-%E9%83%A8%E7%BD%B2-Hexo/image1.png" alt="image1.png"></p>
+<h3 id="7、解析自定义域名到-Github-Pages"><a href="#7、解析自定义域名到-Github-Pages" class="headerlink" title="7、解析自定义域名到 Github Pages"></a>7、解析自定义域名到 Github Pages</h3><p>1、添加域名</p>
+<p><img src="/./Dcoker-%E9%83%A8%E7%BD%B2-Hexo/image2.png" alt="image2.png"></p>
+<p>2、域名解析 CNAME 到 <a target="_blank" rel="noopener" href="https://codermali.github.io/">https://codermali.github.io/</a></p>
+<p><img src="/./Dcoker-%E9%83%A8%E7%BD%B2-Hexo/image3.png" alt="image3.png"></p>
+<p>3、完成</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.codermali.com/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/" data-id="cuidjAmFwd4Npx7_5D30XA9AP" data-title="Dcoker 部署 Hexo" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo-%E7%B3%BB%E5%88%97/">Hexo 系列</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">十一月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/11/09/Dcoker-%E9%83%A8%E7%BD%B2-Hexo/">Dcoker 部署 Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 马力<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo使用本地图片 | mali&#39;s code lib</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="在初次使用 Hexo ，编写第一篇文章的时候，就碰到了问题。 那就是在 md 文件中，引用的图片，在本地编辑器是可以查看的，而在本地启动的网站，或者部署到 Github 的网站中，都不能正常展示。 原因很简单，就是 通过常规的 markdown 语法和相对路径来引用图片和其它资源导致它们在网站上找不到资源。 其实 Hexo 官方文档中提供了插入图片的语法，具体请查看 文档 。 1&#123;% l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo使用本地图片">
+<meta property="og:url" content="https://codermali.github.io/2025/11/11/Hexo%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:site_name" content="mali&#39;s code lib">
+<meta property="og:description" content="在初次使用 Hexo ，编写第一篇文章的时候，就碰到了问题。 那就是在 md 文件中，引用的图片，在本地编辑器是可以查看的，而在本地启动的网站，或者部署到 Github 的网站中，都不能正常展示。 原因很简单，就是 通过常规的 markdown 语法和相对路径来引用图片和其它资源导致它们在网站上找不到资源。 其实 Hexo 官方文档中提供了插入图片的语法，具体请查看 文档 。 1&#123;% l">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-11T15:43:10.000Z">
+<meta property="article:modified_time" content="2025-11-11T16:06:38.067Z">
+<meta property="article:author" content="马力">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="mali's code lib" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">mali&#39;s code lib</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">心之所向，无问西东</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://codermali.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Hexo使用本地图片" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/11/11/Hexo%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87/" class="article-date">
+  <time class="dt-published" datetime="2025-11-11T15:43:10.000Z" itemprop="datePublished">2025-11-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hexo-%E7%B3%BB%E5%88%97/">Hexo 系列</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Hexo使用本地图片
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>在初次使用 <code>Hexo</code> ，编写第一篇文章的时候，就碰到了问题。</p>
+<p>那就是在 <code>md</code> 文件中，引用的图片，在本地编辑器是可以查看的，而在本地启动的网站，或者部署到 <code>Github</code> 的网站中，都不能正常展示。</p>
+<p>原因很简单，就是 通过常规的 markdown 语法和相对路径来引用图片和其它资源导致它们在网站上找不到资源。</p>
+<p>其实 <code>Hexo</code> 官方文档中提供了插入图片的语法，具体请查看 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/tag-plugins#%E5%9B%BE%E5%83%8F">文档</a> 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% link text url [external] [title] %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，当我们在 <code>md</code> 文件中，使用这样的语法时，在本地编辑器中，是无法查看图片的。</p>
+<p>我不太喜欢这种写法，于是继续寻找其他的方法。</p>
+<h3 id="hexo-asset-image"><a href="#hexo-asset-image" class="headerlink" title="hexo-asset-image"></a>hexo-asset-image</h3><p><a target="_blank" rel="noopener" href="https://github.com/xcodebuild/hexo-asset-image"><code>hexo-asset-image</code></a> 是一个 自动为 Hexo 中的资源图像指定绝对路径 的插件。</p>
+<p>安装很简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/hexo/malideBlog $ npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br><span class="line"></span><br><span class="line">added 21 packages, and audited 306 packages in 10s</span><br><span class="line"></span><br><span class="line">43 packages are looking for funding</span><br><span class="line">  run `npm fund` for details</span><br><span class="line"></span><br><span class="line">12 vulnerabilities (2 low, 1 moderate, 5 high, 4 critical)</span><br><span class="line"></span><br><span class="line">To address all issues possible (including breaking changes), run:</span><br><span class="line">  npm audit fix --force</span><br><span class="line"></span><br><span class="line">Some issues need review, and may require choosing</span><br><span class="line">a different dependency.</span><br><span class="line"></span><br><span class="line">Run `npm audit` for details.</span><br><span class="line">/hexo/malideBlog $ hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>当我直接使用命令 <code>npm install hexo-asset-image --save</code> 安装 <code>hexo-asset-image</code> 时，安装好的插件，似乎不太对，并不能正确的将我图片资源的路径转换为绝对路径。</p>
+<p>我对前端不是很在行，没有深究原因的条件，只是进行一个记录。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://codermali.github.io/2025/11/11/Hexo%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87/" data-id="cuid8m6p1XcMfAx6NE6FSiQqK" data-title="Hexo使用本地图片" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/11/10/Docker-%E9%83%A8%E7%BD%B2-Hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Docker 部署 Hexo</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo-%E7%B3%BB%E5%88%97/">Hexo 系列</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">十一月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/11/11/Hexo%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87/">Hexo使用本地图片</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/10/Docker-%E9%83%A8%E7%BD%B2-Hexo/">Docker 部署 Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 马力<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

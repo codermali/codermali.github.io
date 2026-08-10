@@ -1,68 +1,257 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>mali — 十年程序员</title>
-<meta name="description" content="十年程序员。习惯把想法自己做到上线,正在记录 AI 重写这一行的过程。">
+<title>马力 — AI 驱动的全栈工程师</title>
+<meta name="description" content="马力的个人主页：AI 驱动的全栈工程师，习惯把想法自己做到上线，正在尝试用 AI 做更多的事。">
 <style>
-:root{--bg:#fff;--text:#111318;--muted:#656c7a;--line:#e6e8ec;--accent:#1d4ed8;--chip:#f4f5f7}
-@media(prefers-color-scheme:dark){:root{--bg:#0b0c0e;--text:#e8eaed;--muted:#8b929e;--line:#20232a;--accent:#7aa2f7;--chip:#16181d}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);
-font:15px/1.7 -apple-system,"PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:620px;margin:0 auto;padding:76px 24px 56px}
-.top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-h1{font-size:22px;margin:0;font-weight:600;letter-spacing:-.2px}
-.role{font-size:14px;color:var(--muted)}
-.lede{margin:0 0 14px;font-size:15.5px;line-height:1.78}
-h2{font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);
-margin:38px 0 12px;font-weight:600}
-.r{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.r:last-child{border-bottom:0}
-.r .k{color:var(--muted);font-size:13.5px;min-width:62px;flex-shrink:0}
-.r .v{flex:1}
-.r .v b{font-weight:500}
-.r .v .d{color:var(--muted);font-size:13.5px;margin-top:3px;line-height:1.65}
-.stack{margin-top:6px;font-size:12.5px;color:var(--muted);
-font-family:ui-monospace,"SF Mono",Menlo,monospace;opacity:.85}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.contact{margin-top:38px;padding:18px 20px;background:var(--chip);border-radius:10px}
-.contact h2{margin:0 0 10px}
-.contact .row{display:flex;gap:26px;flex-wrap:wrap;font-size:15px;align-items:baseline}
-.mail{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:14.5px}
-.foot{margin-top:28px;font-size:13px;color:var(--muted);line-height:1.9}
-.foot a{color:var(--muted)}
-@media(max-width:520px){.wrap{padding:54px 20px 44px}.r{gap:12px}.r .k{min-width:50px}}
-</style></head><body><div class="wrap">
+:root{
+  --bg:#0a0a0a;
+  --text:#909090;
+  --head:#f0f0f0;
+  --accent:#60a5fa;
+  --chip-bg:rgba(96,165,250,.1);
+  --card-hover:rgba(255,255,255,.045);
+  --line:rgba(144,144,144,.18);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font:16px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:inherit;text-decoration:none}
 
-<div class="top"><h1>mali</h1><span class="role">十年程序员</span></div>
-<p class="lede">这两年在认真面对一个问题:当 AI 能写出大部分代码,这十年攒下的到底还值什么。
-边想边做,过程都记在<a href="https://blog.codermali.com">博客</a>里。</p>
+/* 鼠标聚光灯 */
+#spot{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(600px at 50% 30%,rgba(96,165,250,.07),transparent 80%);
+}
 
-<h2>做出来的东西</h2>
-<div class="r"><span class="k">decade</span><span class="v">
-<b><a href="https://github.com/codermali/decade">个人内容分发平台</a></b>
-<div class="d">笔记写一次,按平台自动改写并分发到公众号、小红书、微博、头条与博客,发布前人工审核。
-含状态机、任务队列、多模型故障转移、浏览器自动化归档。从后端到界面到部署一个人做完,这个站也由它发布。</div>
-<div class="stack">Java · Spring Boot · Vue · Playwright · Docker</div></span></div>
+.layout{
+  position:relative;z-index:1;
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;
+}
 
-<div class="r"><span class="k">homelab</span><span class="v">
-<b>自建一套家庭基础设施</b>
-<div class="d">NAS、软路由、异地组网与内网穿透全部自己搭。把散在印象笔记、Notion 与本地的资料
-统一迁进自托管的 Obsidian,连附件和双链一起,现在是两千多篇的知识库。</div>
-<div class="stack">QNAP · OpenWrt · Tailscale · Docker</div></span></div>
+/* ===== 左栏 ===== */
+.side{
+  position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:96px 0;
+}
+.side h1{color:var(--head);font-size:44px;font-weight:700;letter-spacing:-1px;line-height:1.1}
+.side .role{color:var(--head);font-size:19px;font-weight:500;margin-top:14px}
+.side .tagline{margin-top:14px;max-width:340px;font-size:15.5px}
+nav{margin-top:56px}
+nav a{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 0;font-size:12.5px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--text);
+}
+nav a .bar{
+  width:32px;height:1px;background:var(--text);
+  transition:all .25s ease;
+}
+nav a:hover,nav a.active{color:var(--head)}
+nav a:hover .bar,nav a.active .bar{width:64px;background:var(--head)}
+.social{display:flex;gap:20px;align-items:center}
+.social a{color:var(--text);transition:color .2s,transform .2s;display:block}
+.social a:hover{color:var(--accent);transform:translateY(-2px)}
+.social svg{width:22px;height:22px;fill:currentColor}
 
-<div class="r"><span class="k">写作</span><span class="v">
-<b><a href="https://blog.codermali.com">blog.codermali.com</a></b>
-<div class="d">十年程序员在 AI 冲击下的观察与实践。不写方法论,只写自己趟过的部分。</div></span></div>
+/* ===== 右栏 ===== */
+.main{padding:96px 0;min-height:100vh;display:flex;flex-direction:column}
+section{margin-bottom:96px;scroll-margin-top:96px}
+section:last-child{margin-bottom:48px}
+.sec-title{
+  display:none;
+  color:var(--head);font-size:13px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
+}
+.about p{margin-bottom:16px;font-size:16px}
+.about a,.credit a{color:var(--accent)}
+.about a:hover,.credit a:hover{text-decoration:underline}
+.about b{color:var(--head);font-weight:500}
 
-<div class="contact">
-<h2>联系</h2>
-<div class="row">
-<a class="mail" href="mailto:shanzhizhexing@gmail.com">shanzhizhexing@gmail.com</a>
-<a href="https://github.com/codermali">GitHub</a>
-<a href="https://blog.codermali.com">博客</a>
-</div></div>
+/* 项目/链接卡片 */
+.card{
+  display:grid;grid-template-columns:auto 1fr;gap:4px 20px;
+  padding:20px;border-radius:8px;margin-bottom:12px;
+  border:1px solid transparent;
+  transition:background .2s,border-color .2s,box-shadow .2s;
+}
+.card:hover{
+  background:var(--card-hover);border-color:var(--line);
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.card:hover h3{color:var(--accent)}
+.card:hover .arrow{transform:translate(4px,-4px)}
+.card .when{
+  grid-row:1/span 3;
+  font-size:12px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text);opacity:.75;
+  padding-top:5px;min-width:84px;
+}
+.card h3{
+  color:var(--head);font-size:16.5px;font-weight:500;
+  display:flex;align-items:center;gap:8px;
+}
+.card .arrow{
+  display:inline-block;font-size:14px;color:var(--head);
+  transition:transform .2s ease;
+}
+.card:hover .arrow{color:var(--accent)}
+.card p{font-size:14.5px;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{
+  background:var(--chip-bg);color:var(--accent);
+  font-size:12.5px;font-weight:500;
+  padding:4px 12px;border-radius:999px;
+}
 
-<p class="foot">
-<a href="/2025/11/11/Hexo使用本地图片/">旧文归档</a>　·　© 2026 mali　·
-<a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">粤ICP备18133668号-1</a></p>
+/* 联系 */
+.contact-row{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start}
+.contact-list{flex:1;min-width:240px}
+.contact-list .item{margin-bottom:18px}
+.contact-list .k{
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:2px;
+}
+.contact-list .v a{color:var(--head);font-size:16px}
+.contact-list .v a:hover{color:var(--accent)}
+.qr-card{
+  border:1px solid var(--line);border-radius:8px;
+  padding:16px;text-align:center;width:180px;
+}
+.qr-card .k{
+  font-size:12px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:12px;
+}
+.qr{
+  width:100%;aspect-ratio:1;border-radius:6px;
+  background:rgba(148,163,184,.06);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;line-height:1.6;padding:12px;color:var(--text);
+}
+.qr img{width:100%;height:100%;object-fit:contain;border-radius:5px}
+.qr-card .d{font-size:12.5px;margin-top:10px}
 
-</div></body></html>
+.credit{font-size:13px;line-height:1.9;color:var(--text);opacity:.85;margin-top:auto}
+
+/* ===== 响应式 ===== */
+@media(max-width:900px){
+  .layout{display:block;padding:0 24px}
+  .side{position:static;height:auto;padding:64px 0 0}
+  nav{display:none}
+  .social{margin-top:32px}
+  .main{padding:56px 0;min-height:0}
+  section{margin-bottom:64px}
+  .sec-title{display:block}
+  .card{grid-template-columns:1fr;padding:16px 0}
+  .card .when{grid-row:auto;padding:0;margin-bottom:2px}
+  .card:hover{background:none;border-color:transparent;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div id="spot"></div>
+<div class="layout">
+
+  <!-- 左栏：名片 -->
+  <header class="side">
+    <div>
+      <h1><a href="/">马力</a></h1>
+      <p class="role">AI 驱动的全栈工程师</p>
+      <p class="tagline">习惯把想法自己做到上线。正在尝试用 AI 做更多的事——兴奋，也迷茫。</p>
+      <nav id="nav">
+        <a href="#about" class="active"><span class="bar"></span>关于</a>
+        <a href="#contact"><span class="bar"></span>联系</a>
+      </nav>
+    </div>
+    <div class="social">
+      <a href="https://github.com/codermali" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+      <a href="https://blog.codermali.com" target="_blank" rel="noreferrer" aria-label="博客" title="博客">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21h16v-2H4v2ZM18.7 3.3a2.1 2.1 0 0 0-3 0L5.5 13.5 5 17l3.5-.5L18.7 6.3a2.1 2.1 0 0 0 0-3Z"/></svg>
+      </a>
+      <a href="mailto:mali@codermali.com" aria-label="邮箱" title="邮箱">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm8 7L4 6v12h16V6l-8 5Zm0-2.2L19.2 6H4.8L12 8.8Z"/></svg>
+      </a>
+      <a href="#contact" aria-label="微信" title="微信二维码">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm2 2v4h4V5H5Zm8-2h8v8h-8V3Zm2 2v4h4V5h-4ZM3 13h8v8H3v-8Zm2 2v4h4v-4H5Zm11-2h2v2h-2v-2Zm2 2h2v2h-2v-2Zm-2 2h2v2h-2v-2Zm2 2h2v2h-2v-2Zm2-2h1v4h-1v-4Z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 右栏：内容 -->
+  <main class="main">
+
+    <section id="about" class="about">
+      <h2 class="sec-title">关于</h2>
+      <p>写了十年代码。<b>习惯把想法自己做到上线</b>——后端、前端、部署，一个人跑通整条链路。</p>
+      <p>对 AI 时代，有兴奋，也有迷茫：一边尝试用它做更多的事，看一个人的边界能撑到多大；一边也在想，这十年攒下的经验到底还值什么。<b>没有答案，边做边想。</b>过程都记在<a href="https://blog.codermali.com" target="_blank" rel="noreferrer">博客</a>里，只写自己趟过的部分。</p>
+    </section>
+
+    <section id="contact">
+      <h2 class="sec-title">联系</h2>
+      <div class="contact-row">
+        <div class="contact-list">
+          <div class="item">
+            <p class="k">邮箱</p>
+            <p class="v"><a href="mailto:mali@codermali.com">mali@codermali.com</a></p>
+          </div>
+          <div class="item">
+            <p class="k">GitHub</p>
+            <p class="v"><a href="https://github.com/codermali" target="_blank" rel="noreferrer">github.com/codermali</a></p>
+          </div>
+          <div class="item">
+            <p class="k">博客</p>
+            <p class="v"><a href="https://blog.codermali.com" target="_blank" rel="noreferrer">blog.codermali.com</a></p>
+          </div>
+        </div>
+        <div class="qr-card">
+          <p class="k">微信</p>
+          <div class="qr">
+            <img src="assets/wechat-qr.png" alt="微信二维码"
+                 onerror="this.parentNode.textContent='二维码待放入 assets/wechat-qr.png'">
+          </div>
+          <p class="d">扫码加我</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="credit">
+      <p>© 2016-2026 mali　·　<a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">粤ICP备18133668号-1</a></p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+// 鼠标聚光灯
+const spot = document.getElementById('spot');
+window.addEventListener('mousemove', e => {
+  spot.style.background =
+    `radial-gradient(600px at ${e.clientX}px ${e.clientY}px, rgba(96,165,250,.07), transparent 80%)`;
+});
+
+// 滚动高亮导航
+const links = document.querySelectorAll('#nav a');
+const secs = [...links].map(a => document.querySelector(a.getAttribute('href')));
+const io = new IntersectionObserver(es => {
+  es.forEach(en => {
+    if (en.isIntersecting) {
+      links.forEach(a => a.classList.toggle('active',
+        a.getAttribute('href') === '#' + en.target.id));
+    }
+  });
+}, {rootMargin: '-40% 0px -55% 0px'});
+secs.forEach(s => s && io.observe(s));
+</script>
+</body>
+</html>
